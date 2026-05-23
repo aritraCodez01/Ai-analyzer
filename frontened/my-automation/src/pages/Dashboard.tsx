@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../components/AuthContext'
 import { Activity, Sparkles, FileText, TrendingUp, BarChart3, Plus, AlertCircle, LogOut } from 'lucide-react'
+import { API_BASE_URL } from '../lib/api'
 
 
 export default function Dashboard() {
@@ -33,7 +34,7 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchAnalytics = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/api/v1/resumes/analytics/${user?.id}`)
+                const response = await fetch(`${API_BASE_URL}/api/v1/resumes/analytics/${user?.id}`)
                 const data = await response.json()
                 if (data.status === 'success') {
                     const results = data.data

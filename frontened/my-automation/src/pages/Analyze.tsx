@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Upload, FileText, Send, AlertCircle, Loader2, Sparkles, ArrowRight, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../components/AuthContext';
+import { API_BASE_URL } from '../lib/api';
 
 const Analyze = () => {
     const { user } = useAuth();
@@ -29,7 +30,7 @@ const Analyze = () => {
             formData.append('user_id', user?.id || '');
             formData.append('email', user?.email || '');
 
-            const response = await fetch('http://localhost:8000/api/v1/resumes/analyze', {
+            const response = await fetch(`${API_BASE_URL}/api/v1/resumes/analyze`, {
                 method: 'POST',
                 body: formData,
             });
