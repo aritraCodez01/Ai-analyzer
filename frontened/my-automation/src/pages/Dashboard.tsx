@@ -1,12 +1,22 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../components/AuthContext'
-import { Activity, Sparkles, FileText, TrendingUp, BarChart3, Plus, AlertCircle } from 'lucide-react'
+import { Activity, Sparkles, FileText, TrendingUp, BarChart3, Plus, AlertCircle, LogOut } from 'lucide-react'
 
 
 export default function Dashboard() {
-    const { user } = useAuth()
+    const { user, signOut } = useAuth()
+    const navigate = useNavigate()
     const [analytics, setAnalytics] = useState<any[]>([])
+
+    const handleLogout = async () => {
+        try {
+            await signOut()
+            navigate('/login')
+        } catch (error) {
+            console.error('Error logging out:', error)
+        }
+    }
     const [stats, setStats] = useState({
         total: 12,
         avgScore: 78,
@@ -96,13 +106,20 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
                         <Link to="/analyze">
                             <button className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold transition-all flex items-center gap-2 shadow-lg shadow-indigo-600/20">
                                 <Plus className="w-5 h-5" />
                                 New Analysis
                             </button>
                         </Link>
+                        <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-2 px-5 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 transition-all font-bold text-sm"
+                        >
+                            <LogOut className="w-4 h-4" />
+                            Sign Out
+                        </button>
                     </div>
                 </div>
 
