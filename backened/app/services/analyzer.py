@@ -2,6 +2,9 @@ import re
 import httpx
 import logging
 import time
+import os
+import math
+from collections import Counter
 from app.core.config import settings
 
 logger = logging.getLogger(__name__)
@@ -16,6 +19,29 @@ class ResumeAnalyzer:
         text = text.lower()
         text = re.sub(r'\s+', ' ', text).strip()
         return text
+
+    def calculate_lightweight_similarity(self, text1: str, text2: str) -> float:
+        # Tokenize words (lowercase, alphanumeric only, length >= 3)
+        words1 = re.findall(r'\b\w{3,}\b', text1.lower())
+        words2 = re.findall(r'\b\w{3,}\b', text2.lower())
+        
+        if not words1 or not words2:
+            return 0.0
+            
+        vec1 = Counter(words1)
+        vec2 = Counter(words2)
+        
+        intersection = set(vec1.keys()) & set(vec2.keys())
+        dot_product = sum(vec1[x] * vec2[x] for x in intersection)
+        
+        sum1 = sum(vec1[x]**2 for x in vec1.keys())
+        sum2 = sum(vec2[x]**2 for x in vec2.keys())
+        
+        denominator = math.sqrt(sum1) * math.sqrt(sum2)
+        
+        if not denominator:
+            return 0.0
+        return dot_product / denominator
 
     def calculate_score(self, resume_text: str, jd_text: str) -> dict:
         resume_clean = self.preprocess_text(resume_text)
@@ -73,37 +99,49 @@ class ResumeAnalyzer:
                             raise req_err
                         time.sleep(1.0)
             except httpx.RequestError as req_err:
-                logger.warning(f"Hugging Face Inference API is offline or unreachable: {req_err}. Falling back to local model.")
+                logger.warning(f"Hugging Face Inference API is offline or unreachable: {req_err}. Falling back to local/lightweight model.")
             except Exception as e:
                 logger.error(f"Failed to use Hugging Face Inference API: {e}", exc_info=True)
 
-        # 2. Fallback to local SentenceTransformer if API call failed or HF_TOKEN is not configured
+        # 2. Fallback
         if ats_score is None:
-            logger.info("Falling back to local SentenceTransformer for calculation...")
-            try:
-                # Lazy load local dependencies to prevent memory bloat on startup/API-based paths
-                from sentence_transformers import SentenceTransformer, util
-                import torch
-                
-                # Limit PyTorch CPU threads to save memory and CPU overhead
-                torch.set_num_threads(1)
-                
-                if self.model is None:
-                    self.model = SentenceTransformer(self.model_name)
+            is_render = os.environ.get("RENDER") == "true"
+            
+            if is_render:
+                logger.info("Running on Render - falling back to lightweight TF-based similarity to avoid OOM...")
+                try:
+                    similarity = self.calculate_lightweight_similarity(resume_clean, jd_clean)
+                    ats_score = round(similarity * 100, 2)
+                    logger.info(f"Successfully calculated lightweight score: {ats_score}")
+                except Exception as e:
+                    logger.error(f"Failed lightweight similarity calculation: {e}", exc_info=True)
+                    ats_score = 0.0
+            else:
+                logger.info("Falling back to local SentenceTransformer for calculation...")
+                try:
+                    # Lazy load local dependencies to prevent memory bloat on startup/API-based paths
+                    from sentence_transformers import SentenceTransformer, util
+                    import torch
                     
-                # Generate embeddings
-                resume_embedding = self.model.encode(resume_clean, convert_to_tensor=True)
-                jd_embedding = self.model.encode(jd_clean, convert_to_tensor=True)
+                    # Limit PyTorch CPU threads to save memory and CPU overhead
+                    torch.set_num_threads(1)
+                    
+                    if self.model is None:
+                        self.model = SentenceTransformer(self.model_name)
+                        
+                    # Generate embeddings
+                    resume_embedding = self.model.encode(resume_clean, convert_to_tensor=True)
+                    jd_embedding = self.model.encode(jd_clean, convert_to_tensor=True)
 
-                # Compute cosine similarity
-                cosine_score = util.cos_sim(resume_embedding, jd_embedding).item()
-                
-                # Scale score to 0-100
-                ats_score = round(cosine_score * 100, 2)
-                logger.info(f"Successfully calculated score locally: {ats_score}")
-            except Exception as e:
-                logger.error(f"Failed local fallback calculation: {e}", exc_info=True)
-                ats_score = 0.0  # Fallback score on total failure
+                    # Compute cosine similarity
+                    cosine_score = util.cos_sim(resume_embedding, jd_embedding).item()
+                    
+                    # Scale score to 0-100
+                    ats_score = round(cosine_score * 100, 2)
+                    logger.info(f"Successfully calculated score locally: {ats_score}")
+                except Exception as e:
+                    logger.error(f"Failed local fallback calculation: {e}", exc_info=True)
+                    ats_score = 0.0  # Fallback score on total failure
 
         # Simple keyword-based skill gap
         jd_keywords = set(re.findall(r'\b\w{3,}\b', jd_clean))
