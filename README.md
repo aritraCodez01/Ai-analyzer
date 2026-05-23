@@ -75,6 +75,14 @@ The project includes a production-optimized `Dockerfile` that pre-downloads the 
 3. Set the Root Directory to `backened/`.
 4. Render will automatically use the `Dockerfile` to build and serve your AI engine!
 
+## ⚙️ Supabase URL Configuration (For Authentication)
+
+When deploying your frontend application, you must configure the redirect URLs in your Supabase project to ensure authentication (Google OAuth / Email) and password reset flows redirect properly:
+
+1. Go to the **Supabase Dashboard** and select your project.
+2. Navigate to **Authentication > URL Configuration**.
+3. Under **Site URL**, set the URL of your deployed frontend (e.g., `https://your-app.vercel.app`).
+
 ---
 *Created with ❤️
 
