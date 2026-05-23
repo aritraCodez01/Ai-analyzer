@@ -98,8 +98,8 @@ export default function Dashboard() {
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center p-6 rounded-3xl glass gap-4">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-600/20">
-                            <Sparkles className="text-white w-7 h-7" />
+                        <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center shadow-lg">
+                            <img src="/vite.svg" className="w-8 h-8" alt="ResumeAI Logo" />
                         </div>
                         <div>
                             <h1 className="text-2xl font-bold font-['Outfit'] tracking-tight">ResumeAI Analytics</h1>
