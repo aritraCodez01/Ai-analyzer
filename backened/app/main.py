@@ -1,9 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.Api.v1.endpoints.resume import router as resume_router
-from app.models.user import UserTable
-from app.models.resume import ResumeTable
-from app.models.analysis import AnalysisResultTable
 
 
 # Create FastAPI app

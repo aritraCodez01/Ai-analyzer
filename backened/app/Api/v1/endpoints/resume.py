@@ -6,9 +6,8 @@ from app.services.analyzer import ResumeAnalyzer
 from app.models.user import UserTable
 from app.models.resume import ResumeTable
 from app.models.analysis import AnalysisResultTable
-from app.schemas.resume import Resume, ResumeCreate
-from app.schemas.analysis import AnalysisResult, AnalysisResultCreate
-from typing import List, Optional
+from app.schemas.resume import ResumeCreate
+from app.schemas.analysis import AnalysisResultCreate
 import uuid
 
 router = APIRouter()
