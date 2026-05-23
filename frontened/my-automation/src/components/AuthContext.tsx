@@ -37,7 +37,38 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     const signOut = async () => {
-        await supabase.auth.signOut();
+        try {
+            await supabase.auth.signOut();
+        } catch (err) {
+            console.error("Error signing out from Supabase:", err);
+        }
+
+        // Clear local storage and session storage
+        localStorage.clear();
+        sessionStorage.clear();
+
+        // Clear all cookies for the current domain
+        try {
+            const cookies = document.cookie.split(";");
+            for (const cookie of cookies) {
+                const eqPos = cookie.indexOf("=");
+                const name = eqPos > -1 ? cookie.substring(0, eqPos).trim() : cookie.trim();
+                
+                // Clear cookie on current path and domain variations
+                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=${window.location.hostname}`;
+                
+                const parts = window.location.hostname.split('.');
+                while (parts.length > 0) {
+                    const domain = parts.join('.');
+                    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=.${domain}`;
+                    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=${domain}`;
+                    parts.shift();
+                }
+            }
+        } catch (cookieErr) {
+            console.error("Error clearing cookies:", cookieErr);
+        }
     };
 
     return (
