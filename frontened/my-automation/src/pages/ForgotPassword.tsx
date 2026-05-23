@@ -60,7 +60,7 @@ const ForgotPassword = () => {
                         <ArrowLeft className="w-5 h-5" />
                     </Link>
                     <div className="flex items-center gap-2">
-                        <Sparkles className="text-indigo-500 w-6 h-6" />
+                        <img src="/vite.svg" className="w-6 h-6" alt="ResumeAI Logo" />
                         <span className="text-xl font-bold text-white font-['Outfit']">ResumeAI</span>
                     </div>
                 </div>

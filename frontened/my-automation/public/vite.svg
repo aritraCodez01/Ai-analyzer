@@ -1,1 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="31.88" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 257"><defs><linearGradient id="IconifyId1813088fe1fbc01fb466" x1="-.828%" x2="57.636%" y1="7.652%" y2="78.411%"><stop offset="0%" stop-color="#41D1FF"></stop><stop offset="100%" stop-color="#BD34FE"></stop></linearGradient><linearGradient id="IconifyId1813088fe1fbc01fb467" x1="43.376%" x2="50.316%" y1="2.242%" y2="89.03%"><stop offset="0%" stop-color="#FFEA83"></stop><stop offset="8.333%" stop-color="#FFDD35"></stop><stop offset="100%" stop-color="#FFA800"></stop></linearGradient></defs><path fill="url(#IconifyId1813088fe1fbc01fb466)" d="M255.153 37.938L134.897 252.976c-2.483 4.44-8.862 4.466-11.382.048L.875 37.958c-2.746-4.814 1.371-10.646 6.827-9.67l120.385 21.517a6.537 6.537 0 0 0 2.322-.004l117.867-21.483c5.438-.991 9.574 4.796 6.877 9.62Z"></path><path fill="url(#IconifyId1813088fe1fbc01fb467)" d="M185.432.063L96.44 17.501a3.268 3.268 0 0 0-2.634 3.014l-5.474 92.456a3.268 3.268 0 0 0 3.997 3.378l24.777-5.718c2.318-.535 4.413 1.507 3.936 3.838l-7.361 36.047c-.495 2.426 1.782 4.5 4.151 3.78l15.304-4.649c2.372-.72 4.652 1.36 4.15 3.788l-11.698 56.621c-.732 3.542 3.979 5.473 5.943 2.437l1.313-2.028l72.516-144.72c1.215-2.423-.88-5.186-3.54-4.672l-25.505 4.922c-2.396.462-4.435-1.77-3.759-4.114l16.646-57.705c.677-2.35-1.37-4.583-3.769-4.113Z"></path></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <!-- Main brand gradient (Indigo to Purple) -->
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#8B5CF6" />
+    </linearGradient>
+    
+    <!-- Sparkle/Accent gradient (Cyan to Pink) -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE" />
+      <stop offset="50%" stop-color="#EC4899" />
+      <stop offset="100%" stop-color="#F43F5E" />
+    </linearGradient>
+
+    <!-- Glassmorphic card gradient -->
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.02" />
+    </linearGradient>
+    
+    <!-- Subtle drop shadow -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background glowing accent -->
+  <circle cx="50" cy="50" r="40" fill="url(#brandGrad)" opacity="0.15" filter="url(#glow)" />
+
+  <!-- 1. The Resume Document Base Shape -->
+  <path d="M 28 20 C 28 17, 30 15, 33 15 H 58 L 72 29 V 80 C 72 83, 70 85, 67 85 H 33 C 30 85, 28 83, 28 80 Z" fill="url(#glassGrad)" stroke="url(#brandGrad)" stroke-width="3" stroke-linejoin="round" />
+
+  <!-- Page Fold (Top right corner detail) -->
+  <path d="M 58 15 V 25 C 58 27, 60 29, 62 29 H 72" fill="none" stroke="url(#brandGrad)" stroke-width="3" stroke-linejoin="round" />
+
+  <!-- Stylized Resume Text Lines -->
+  <path d="M 38 40 H 62" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.3" />
+  <path d="M 38 50 H 54" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.3" />
+  <path d="M 38 60 H 48" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.3" />
+
+  <!-- 2. Overlapping AI Sparkle (Symbolizing AI Analysis) -->
+  <path d="M 64 52 C 64.5 58, 66 59.5, 72 60 C 66 60.5, 64.5 62, 64 68 C 63.5 62, 62 60.5, 56 60 C 62 59.5, 63.5 58, 64 52 Z" fill="url(#accentGrad)" filter="url(#glow)" />
+
+  <!-- Smaller secondary spark -->
+  <path d="M 44 26 C 44.3 29, 45 29.7, 48 30 C 45 30.3, 44.3 31, 44 34 C 43.7 31, 43 30.3, 40 30 C 43 29.7, 43.7 29, 44 26 Z" fill="url(#accentGrad)" opacity="0.8" />
+</svg>

@@ -55,8 +55,8 @@ const Analyze = () => {
                 {/* Header */}
                 <div className="p-8 rounded-3xl glass flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-600/20">
-                            <Sparkles className="text-white w-8 h-8" />
+                        <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center shadow-lg">
+                            <img src="/vite.svg" className="w-9 h-9" alt="ResumeAI Logo" />
                         </div>
                         <div>
                             <h1 className="text-3xl font-bold font-['Outfit'] tracking-tight">AI Resume Engine</h1>
