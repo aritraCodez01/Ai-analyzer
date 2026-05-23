@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, ArrowLeft, Sparkles, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { API_BASE_URL } from '../lib/api';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ const ForgotPassword = () => {
 
         try {
             // Check if email exists in our local DB first
-            const checkRes = await fetch(`http://localhost:8000/api/v1/resumes/check-email/${email}`);
+            const checkRes = await fetch(`${API_BASE_URL}/api/v1/resumes/check-email/${email}`);
             const checkData = await checkRes.json();
 
             if (checkData.status === 'success' && !checkData.exists) {
