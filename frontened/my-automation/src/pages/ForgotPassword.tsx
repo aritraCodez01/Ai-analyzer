@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, ArrowLeft, Sparkles, ArrowRight } from 'lucide-react';
+import { Mail, ArrowLeft, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { API_BASE_URL } from '../lib/api';
 

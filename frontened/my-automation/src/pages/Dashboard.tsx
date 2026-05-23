@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../components/AuthContext'
-import { Activity, Sparkles, FileText, TrendingUp, BarChart3, Plus, AlertCircle, LogOut } from 'lucide-react'
+import { Activity, FileText, TrendingUp, BarChart3, Plus, AlertCircle, LogOut } from 'lucide-react'
 import { API_BASE_URL } from '../lib/api'
 
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Upload, FileText, Send, AlertCircle, Loader2, Sparkles, ArrowRight, LayoutDashboard } from 'lucide-react';
+import { Upload, FileText, Send, AlertCircle, Loader2, ArrowRight, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../components/AuthContext';
 import { API_BASE_URL } from '../lib/api';
 
