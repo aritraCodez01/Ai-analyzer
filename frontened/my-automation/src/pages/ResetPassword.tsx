@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Lock, ArrowRight, ShieldCheck } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 const ResetPassword = () => {
